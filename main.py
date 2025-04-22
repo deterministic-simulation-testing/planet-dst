@@ -33,7 +33,11 @@ class Post(object):
     content : str = None
 
 def isoformat_to_rfc3339(isofmt):
-    return isofmt[0:-6] + 'Z'
+    if isofmt[-6] == '+' and isofmt[-3] == ':':
+        isofmt = isofmt[0:-6]
+    if not isofmt.endswith('Z'):
+        isofmt = isofmt + 'Z'
+    return isofmt
 
 def extract_rss_feedsource(feed):
     feed = feed.find('channel')

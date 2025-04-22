@@ -2,11 +2,12 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
   <title>{{site_config['title']}}</title>
   <id>https://{{site_config['domain']}}/</id>
+  <author><name>{{site_config['title']}}</name></author>
   <updated>{{rfc3339now}}</updated>
   <link href="{{site_config['self_url']}}" rel="self" type="application/atom+xml"/>
   {%- for entry in entries %}
   <entry>
-    <title>{{entry.title}}</title>
+    <title>{{entry.title | e}}</title>
     <published>{{entry.published}}</published>
     <id>{{entry.id_}}</id>
     <link rel="alternate" type="text/html" href="{{entry.link}}"/>
@@ -18,7 +19,7 @@
     {%- endif %}
     <source>
       <id>{{entry.source.id_}}</id>
-      <title>{{entry.source.title}}</title>
+      <title>{{entry.source.title | e}}</title>
       {%- if entry.source.updated is not none %}
       <updated>{{entry.source.updated}}</updated>
       {%- endif %}
