@@ -1,0 +1,40 @@
+site:
+  title: Simulation Testing News
+  domain: simulation-testing.news 
+  self_url: https://simulation-testing.news/atom.xml
+
+feeds:
+- name: Pierre Zemb's Blog
+  url: https://pierrezemb.fr/atom.xml
+  category:
+    - scheme: tag
+      term: simulation
+- name: Phil Eaton's Blog
+  url: https://notes.eatonphil.com/rss.xml
+  category:
+    - domain: http://notes.eatonphil.com/tags/
+      text: dst
+- name: Stevan's Blog
+  url: https://stevana.github.io/rss.xml
+  category:
+    - text: Testing
+- name: TigerBeetle
+  url: https://tigerbeetle.com/blog/atom.xml
+  posts:
+    - atom:id: https://tigerbeetle.com/blog/2025-02-13-a-descent-into-the-vortex
+    - atom:id: https://tigerbeetle.com/blog/2023-07-06-simulation-testing-for-liveness
+    - atom:id: https://tigerbeetle.com/blog/2023-03-28-random-fuzzy-thoughts
+- name: ResonateHQ
+  url: https://journal.resonatehq.io/feed
+  posts:
+    - guid: https://journal.resonatehq.io/p/how-we-test-the-resonate-server
+    - guid: https://journal.resonatehq.io/p/dst-w-dominik-and-joran-e68
+    - guid: https://journal.resonatehq.io/p/dst-finds-a-bug
+- name: S2 - the Stream Store
+  url: https://s2.dev/blog/feed.xml
+  posts:
+    - guid: https://s2.dev/blog/dst
+- name: PolarSignals
+  url: https://www.polarsignals.com/rss.xml
+  posts:
+    - guid: https://www.polarsignals.com/blog/posts/2024/05/28/mostly-dst-in-go/

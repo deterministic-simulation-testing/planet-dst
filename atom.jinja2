@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>{{site_config['title']}}</title>
+  <id>https://{{site_config['domain']}}/</id>
+  <updated>{{rfc3339now}}</updated>
+  <link href="{{site_config['self_url']}}" rel="self" type="application/atom+xml"/>
+  {%- for entry in entries %}
+  <entry>
+    <title>{{entry.title}}</self>
+    <published>{{entry.published}}</published>
+    <id>{{entry.id_}}</id>
+    <link rel="alternate" type="text/html" href="{{entry.link}}"/>
+    {%- if entry.summary is not none %}
+    <summary>{{entry.summary}}</summary>
+    {%- endif %}
+    {%- if entry.content is not none %}
+    <content>{{entry.content}}</content>
+    {%- endif %}
+    <source>
+      <id>{{entry.source.id_}}</id>
+      <title>{{entry.source.title}}</title>
+      {%- if entry.source.updated is not none %}
+      <updated>{{entry.source.updated}}</updated>
+      {%- endif %}
+      <link href="{{entry.source.link}}" rel="self" type="application/atom+xml" />
+    </source>
+  </entry>
+  {%- endfor %}
+</feed>
