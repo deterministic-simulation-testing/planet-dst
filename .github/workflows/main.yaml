@@ -43,8 +43,7 @@ jobs:
     - name: Build Atom Feed
       run: |
         mkdir site
-        uv run main.py --config feeds.yaml --atom site/atom.xml --html site/index.html
-        cp style.css site/style.css
+        uv run --frozen feed-aggregator --config feeds.yaml --atom site/atom.xml --css site/style.css --html site/site.html
 
     - name: Setup Pages
       uses: actions/configure-pages@v5
