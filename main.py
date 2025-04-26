@@ -12,13 +12,21 @@ NAMESPACES = {
     'atom': 'http://www.w3.org/2005/Atom',
     'content': 'http://purl.org/rss/1.0/modules/content/'
 }
+DEBUG = False
+
+@dataclasses.dataclass
+class Author(object):
+    name : str = None
+    configname : str = None
+    uri : str = None
+    email : str = None
 
 @dataclasses.dataclass
 class FeedSource(object):
     id_ : str
     title : str
     link : str
-    author : str = None
+    author : Author = None
     updated : str = None
 
 @dataclasses.dataclass
@@ -28,7 +36,6 @@ class Post(object):
     id_ : str
     link : str
     source : FeedSource
-    author : str = None
     summary : str = None
     content : str = None
 
@@ -72,6 +79,17 @@ def extract_atom_feedsource(feed):
     updated = feed.find('atom:updated', namespaces=NAMESPACES).text
     link = feed.find('atom:link', namespaces=NAMESPACES).get('href')
     id_ = feed.find('atom:id', namespaces=NAMESPACES).text
+    def author(feed):
+        author = feed.find('atom:author', namespaces=NAMESPACES)
+        if author is not None:
+            name = author.find('atom:name', namespaces=NAMESPACES).text
+            uri = author.find('atom:uri', namespaces=NAMESPACES)
+            if uri is not None: uri = uri.text
+            email = author.find('atom:email', namespaces=NAMESPACES)
+            if email is not None: email = email.text
+            return Author(name=name, uri=uri, email=email)
+        return None
+    author = author(feed)
     args = locals()
     del args['feed']
     return FeedSource(**args)
@@ -80,9 +98,9 @@ def extract_atom_post(source, entry):
     title = entry.find('atom:title', namespaces=NAMESPACES).text
     published = entry.find('atom:published', namespaces=NAMESPACES).text
     content = entry.find('atom:content', namespaces=NAMESPACES)
-    content = content.text if content else None
+    content = content.text if content is not None else None
     summary = entry.find('atom:summary', namespaces=NAMESPACES)
-    summary = summary.text if summary else None
+    summary = summary.text if summary is not None else None
     id_ = entry.find('atom:id', namespaces=NAMESPACES).text
     link = entry.find('atom:link', namespaces=NAMESPACES).get('href')
     args = locals()
@@ -93,7 +111,7 @@ def matches_category(spec, entry):
     if spec is None:
         return False
 
-    post_categories = entry.findall('category')
+    post_categories = entry.xpath('.//category | .//atom:category', namespaces=NAMESPACES)
     for allowed in spec:
         for postcat in post_categories:
             for (key, value) in allowed.items():
@@ -129,14 +147,28 @@ def posts_to_atom(site_config, posts, f):
     atom_xml = atom_template.render(site_config=site_config, entries=posts, rfc3339now=rfc3339now)
     f.write(atom_xml)
 
+def posts_to_html(site_config, posts, f):
+    env = jinja2.Environment(
+        loader=jinja2.FileSystemLoader("."),
+        autoescape=jinja2.select_autoescape(["html", "xml"])
+    )
+    html_template = env.get_template("html.jinja2")
+    html_content = html_template.render(site_config=site_config, posts=posts)
+    f.write(html_content)
+
 def parse_args(argv):
     parser = argparse.ArgumentParser()
     parser.add_argument('--name', help="Fetch only the feed of this name")
-    parser.add_argument('--atom', required=True, help="Output filename for combined atom feed")
+    parser.add_argument('--atom', help="Output filename for combined atom feed")
+    parser.add_argument('--html', help="Output filename for html site")
+    parser.add_argument('--debug', action='store_true')
     return parser.parse_args(argv)
 
 def main(argv):
     args = parse_args(argv)
+    if args.debug:
+        global DEBUG
+        DEBUG = True
     config = yaml.safe_load(open('feeds.yaml'))
     feeds = config['feeds']
     aggregated_posts = []
@@ -155,6 +187,10 @@ def main(argv):
             feedtype = 'atom'
             feedsource = extract_atom_feedsource(xmlfeed)
         assert(feedtype is not None)
+        if feedsource.author is not None:
+            feedsource.author.configname = feed['name']
+        else:
+            feedsource.author = Author(configname=feed['name'])
         
         entries = xmlfeed.xpath('//atom:entry | //item', namespaces=NAMESPACES)
         for entry in entries:
@@ -165,15 +201,12 @@ def main(argv):
                 if feedtype == 'rss': aggregated_posts.append(extract_rss_post(feedsource, entry))
                 if feedtype == 'atom': aggregated_posts.append(extract_atom_post(feedsource, entry))
 
-    def datestr_to_isoformat(s):
-        if s.endswith('Z'):
-            s = s[0:-1]
-        if s[-6] != '+' and s[-3] != ':':
-            s = s + "+00:00"
-        return s
-    aggregated_posts.sort(key=lambda x: datetime.datetime.fromisoformat(datestr_to_isoformat(x.published)))
+    aggregated_posts.sort(key=lambda x: datetime.datetime.fromisoformat(x.published))
     aggregated_posts.reverse()
-    posts_to_atom(config['site'], aggregated_posts, open(args.atom, 'w'))
+    if args.atom is not None:
+        posts_to_atom(config['site'], aggregated_posts, open(args.atom, 'w'))
+    if args.html is not None:
+        posts_to_html(config['site'], aggregated_posts, open(args.html, 'w'))
 
 
 if __name__ == "__main__":

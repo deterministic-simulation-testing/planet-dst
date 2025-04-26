@@ -8,6 +8,9 @@
   {%- for entry in entries %}
   <entry>
     <title>{{entry.title | e}}</title>
+    <author>
+      <name>{{entry.source.author.configname}}</name>
+    </author>
     <published>{{entry.published}}</published>
     <updated>{{entry.published}}</updated>
     <id>{{entry.id_}}</id>
@@ -21,6 +24,17 @@
     <source>
       <id>{{entry.source.id_}}</id>
       <title>{{entry.source.title | e}}</title>
+      {%- if entry.source.author.name is not none %}
+      <author>
+        <name>{{entry.source.author.name}}</name>
+        {%- if entry.source.author.uri is not none %}
+        <uri>{{entry.source.author.uri}}</uri>
+        {%- endif %}
+        {%- if entry.source.author.email is not none %}
+        <email>{{entry.source.author.email}}</email>
+        {%- endif %}
+      </author>
+      {%- endif %}
       {%- if entry.source.updated is not none %}
       <updated>{{entry.source.updated}}</updated>
       {%- endif %}

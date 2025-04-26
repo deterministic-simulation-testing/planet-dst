@@ -4,17 +4,16 @@ site:
   self_url: https://simulation-testing.news/atom.xml
 
 feeds:
-- name: Pierre Zemb's Blog
+- name: Pierre Zemb
   url: https://pierrezemb.fr/atom.xml
   category:
-    - scheme: tag
-      term: simulation
-- name: Phil Eaton's Blog
+    - term: simulation
+- name: Phil Eaton
   url: https://notes.eatonphil.com/rss.xml
   category:
     - domain: http://notes.eatonphil.com/tags/
       text: dst
-- name: Stevan's Blog
+- name: Stevan
   url: https://stevana.github.io/rss.xml
   category:
     - text: Testing
@@ -30,7 +29,7 @@ feeds:
     - guid: https://journal.resonatehq.io/p/how-we-test-the-resonate-server
     - guid: https://journal.resonatehq.io/p/dst-w-dominik-and-joran-e68
     - guid: https://journal.resonatehq.io/p/dst-finds-a-bug
-- name: S2 - the Stream Store
+- name: S2 Stream Store
   url: https://s2.dev/blog/feed.xml
   posts:
     - guid: https://s2.dev/blog/dst
