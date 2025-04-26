@@ -159,6 +159,7 @@ def posts_to_html(site_config, posts, f):
 def parse_args(argv):
     parser = argparse.ArgumentParser()
     parser.add_argument('--name', help="Fetch only the feed of this name")
+    parser.add_argument('--config', required=True, help="Input YAML file of site info and feeds")
     parser.add_argument('--atom', help="Output filename for combined atom feed")
     parser.add_argument('--html', help="Output filename for html site")
     parser.add_argument('--debug', action='store_true')
@@ -169,7 +170,7 @@ def main(argv):
     if args.debug:
         global DEBUG
         DEBUG = True
-    config = yaml.safe_load(open('feeds.yaml'))
+    config = yaml.safe_load(open(args.config))
     feeds = config['feeds']
     aggregated_posts = []
     for feed in feeds:
