@@ -21,6 +21,12 @@ header {
     padding-bottom: 15px;
     border-bottom: 1px solid #e4e4e4;
 }
+@media screen and (max-width: 550px) {
+    header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}
 .site-title {
     font-size: 28px;
     font-weight: bold;
