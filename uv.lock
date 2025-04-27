@@ -36,7 +36,7 @@ wheels = [
 [[package]]
 name = "feed-aggregator"
 version = "0.1.0"
-source = { git = "https://github.com/thisismiller/feed-aggregator.git?rev=fe5c6457c1caf369df908c7862e455897ab7437d#fe5c6457c1caf369df908c7862e455897ab7437d" }
+source = { git = "https://github.com/thisismiller/feed-aggregator.git?rev=7c671627aeb6f8d1629ad5a6d6337290f83ff1bf#7c671627aeb6f8d1629ad5a6d6337290f83ff1bf" }
 dependencies = [
     { name = "jinja2" },
     { name = "lxml" },
@@ -128,7 +128,7 @@ dependencies = [
 ]
 
 [package.metadata]
-requires-dist = [{ name = "feed-aggregator", git = "https://github.com/thisismiller/feed-aggregator.git?rev=fe5c6457c1caf369df908c7862e455897ab7437d" }]
+requires-dist = [{ name = "feed-aggregator", git = "https://github.com/thisismiller/feed-aggregator.git?rev=7c671627aeb6f8d1629ad5a6d6337290f83ff1bf" }]
 
 [[package]]
 name = "python-dateutil"
