@@ -9,4 +9,4 @@ dependencies = [
 ]
 
 [tool.uv.sources]
-feed-aggregator = { git = "https://github.com/thisismiller/feed-aggregator.git" }
+feed-aggregator = { git = "https://github.com/thisismiller/feed-aggregator.git", rev = "fe5c6457c1caf369df908c7862e455897ab7437d" }
