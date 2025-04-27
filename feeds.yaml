@@ -1,7 +1,8 @@
 site:
-  title: Simulation Testing News
-  domain: simulation-testing.news 
-  self_url: https://simulation-testing.news/atom.xml
+  title: Planet DST
+  repo: https://github.com/deterministic-simulation-testing/planet-dst/
+  domain: deterministic-simulation-testing.github.io/planet-dst
+  self_url: https://deterministic-simulation-testing.github.io/planet-dst/atom.xml
 
 feeds:
 - name: Pierre Zemb
