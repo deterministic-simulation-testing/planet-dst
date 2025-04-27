@@ -38,3 +38,7 @@ feeds:
   url: https://www.polarsignals.com/rss.xml
   posts:
     - guid: https://www.polarsignals.com/blog/posts/2024/05/28/mostly-dst-in-go/
+- name: Poorly Defined Behavior
+  url: https://poorlydefinedbehaviour.github.io/index.xml
+  posts:
+    - guid: https://poorlydefinedbehaviour.github.io/posts/deterministic_simulation_testing/
