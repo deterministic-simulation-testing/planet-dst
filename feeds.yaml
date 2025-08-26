@@ -33,6 +33,7 @@ feeds:
 - name: S2 Stream Store
   url: https://s2.dev/blog/feed.xml
   posts:
+    - guid: https://s2.dev/blog/linearizability
     - guid: https://s2.dev/blog/dst
 - name: PolarSignals
   url: https://www.polarsignals.com/rss.xml
