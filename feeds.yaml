@@ -44,3 +44,7 @@ feeds:
   url: https://poorlydefinedbehaviour.github.io/index.xml
   posts:
     - guid: https://poorlydefinedbehaviour.github.io/posts/deterministic_simulation_testing/
+- name: Oskar Wickström
+  url: https://wickstrom.tech/feed.xml
+  posts:
+    - atom:id: https://wickstrom.tech/2025-08-28-findings-bugs-coding-agent-lightweight-dst.html
